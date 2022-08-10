@@ -1,4 +1,18 @@
-# client
+# Google maps need API access 
+it can be found in
+```
+client/src/main.js
+```
+then paste your key at line 7
+```
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "api_key",
+    libraries: "places",
+  },
+});
+```
+# Project setup
 ## Change Directory 
 ```
 cd client
