@@ -1,101 +1,105 @@
 <template>
-<div>
-    <v-card max-width="90vw" color="cyan darken-3" dark :loading="isUpdating">
-        <template slot="progress">
-            <v-progress-linear  color="lime darken-1" rounded height="6" indeterminate></v-progress-linear>
-        </template>
-        <v-img  height="200" src="../../assets/2.png"> 
-            <v-row
-                class="pa-4"
-                align="center"
-                justify="center"
-            >
-                <v-col class="text-center">
-                    <h3 class="text-h4 font-weight-medium">
-                        Type your courses
-                    </h3>
-                    <span class="grey--text text--lighten-1">Please enter no more than 5 courses</span>
-                </v-col>
-            </v-row>
-        </v-img>
-        <v-form v-model="valid"  ref="form">
-            <v-container>
-                <v-row>
-                    <v-col v-for="(item, index) in chipArr" :key="index">
-                        <div class="text-center">
-                            <v-chip
-                                v-if="chip"
-                                class="ma-2"
-                                close
-                                color="amber lighten-2"
+    <div>
+        <v-card max-width="90vw" color="cyan darken-3" dark :loading="isUpdating">
+            <template slot="progress">
+                <v-progress-linear  color="lime darken-1" rounded height="6" indeterminate></v-progress-linear>
+            </template>
+            <v-img  height="200" src="../../assets/2.png"> 
+                <v-row
+                    class="pa-4"
+                    align="center"
+                    justify="center"
+                >
+                    <v-col class="text-center">
+                        <h3 class="text-h4 font-weight-medium">
+                            Type your courses
+                        </h3>
+                        <span class="grey--text text--lighten-1">Please enter no more than 5 courses</span>
+                    </v-col>
+                </v-row>
+            </v-img>
+            <v-form v-model="valid"  ref="form">
+                <v-container>
+                    <v-row>
+                        <v-col class="ma-5" v-for="(item, index) in chipArr" :key="index">
+                            <div class="text-center">
+                                <v-chip
+                                    v-if="chip"
+                                    class="ma-2"
+                                    close
+                                    color="amber lighten-2"
+                                    outlined
+                                    @click:close="remove(item)"
+                                >
+                                    <v-icon left>mdi-book</v-icon>
+                                    {{ item }}
+                                </v-chip>
+                            </div>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col
+                            cols="12"
+                            md="6"
+                        >
+                            <v-text-field
+                                v-model="courseName"
+                                :rules="courseNameRules"
+                                :counter="7"
+                                label="Course Name"
+                                required
+                            ></v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            md="6"
+                        >
+                            <v-text-field
+                                v-model="courseNumber"
+                                :rules="courseNumberRules"
+                                :counter="3"
+                                label="Course Number"
+                                required
+                            ></v-text-field>
+                        </v-col>
+                        <v-col
+                            class="d-flex"
+                            cols="12"
+                            sm="12"
+                        >
+                            <v-select
+                                :items="items"
+                                label="Choose Semester"
                                 outlined
-                                @click:close="remove(item)"
-                            >
-                                <v-icon left>mdi-robot-excited</v-icon>
-                                {{ item }}
-                            </v-chip>
-                        </div>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col
-                        cols="12"
-                        md="6"
-                    >
-                        <v-text-field
-                            v-model="courseName"
-                            :rules="courseNameRules"
-                            :counter="7"
-                            label="Course Name"
-                            required
-                        ></v-text-field>
-                    </v-col>
-                    <v-col
-                        cols="12"
-                        md="6"
-                    >
-                        <v-text-field
-                            v-model="courseNumber"
-                            :rules="courseNumberRules"
-                            :counter="3"
-                            label="Course Number"
-                            required
-                        ></v-text-field>
-                    </v-col>
-                    <v-col
-                        class="d-flex"
-                        cols="12"
-                        sm="12"
-                    >
-                        <v-select
-                            :items="items"
-                            label="Choose Semester"
-                            outlined
-                            v-model="selected"
-                            :rules="semesterRules"
-                        ></v-select>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-btn color="primary" class="mr-4" @click="submit" :disabled="isDisabled">
-                            Submit
-                        </v-btn>
-                    </v-col>
-                    <v-col>
-                        <v-btn color="success" class="mr-4" @click="add" :disabled="isDisabled">
-                            Add
-                        </v-btn>
-                    </v-col>
-                </v-row>
-            </v-container>
-        </v-form>
-    </v-card>
-    <div v-if="showTable" >
-        <div v-for="(data, index) in tableData" :key="index">
-            <TableVue class="mt-12" :data="data"/>
-        </div>
-    </div>
+                                v-model="selected"
+                                :rules="semesterRules"
+                            ></v-select>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-btn color="primary" class="mr-4" @click="submit" :disabled="isDisabled">
+                                Submit
+                            </v-btn>
+                        </v-col>
+                        <v-col>
+                            <v-btn color="success" class="mr-4" @click="add" :disabled="isDisabled2">
+                                Add
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-form>
+        </v-card>
+        <v-slide-x-transition>
+            <div v-if="showTable" class="text-center">
+                <h4 class="ma-5 text-h2 font-weight-medium">Here's what I came up with..📑</h4>
+                <div v-for="(data, index) in tableData" :key="index">
+                    <TableVue class="mt-12" :data="data"/>
+                </div>
+            </div>
+        </v-slide-x-transition>
     </div>
 </template>
 <script>
@@ -110,6 +114,7 @@ export default {
         return {
             selected: '',
             isDisabled: false,
+            isDisabled2: false,
             chipArr: [],
             tableData: [],
             showTable: false,
@@ -149,15 +154,17 @@ export default {
                 this.isUpdating = true
                 this.showTable = false
                 this.isDisabled = true
+                this.isDisabled2 = true
                 let  response = await axios.get(url)
                 response = await axios.get(url)
                 this.tableData = response.data
                 this.showTable = true
                 this.isUpdating = false
                 this.isDisabled = false
+                this.isDisabled2 = false
                 this.chipArr = []
                 this.$refs.form.reset()
-                console.log(this.tableData)
+                // console.log(this.tableData)
 
             },
             add () {
@@ -166,6 +173,7 @@ export default {
                 this.courseNumber = ''
                 this.chip = true
                 this.isDisabled = this.chipArr.length === 6 ? true : false
+                this.isDisabled2 = this.chipArr.length === 5 ? true : false
             }
         },
 }
@@ -175,6 +183,9 @@ export default {
 
 h3 {
     color: #F5F0BB;
+}
+h4 {
+    color: #006064
 }
 
 </style>
