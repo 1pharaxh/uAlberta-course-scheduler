@@ -1,5 +1,8 @@
 <template>
-    <v-app-bar app color="white" flat>
+    <v-app-bar app color="white" flat height="90vh">
+      <div  class="pr-5">
+        <v-img left src="./../assets/icon.png" width="90px"></v-img >
+      </div>
       <v-tabs v-model="activeTab" centered class="ml-n9" color="grey darken-1">
         <!-- Send a special event name and value pair to the parent to process what tab was clicked -->
         <v-tab v-for="tab in tabs" :key="tab.id"  @click="$emit('selected', tab.id)">

@@ -6,7 +6,7 @@
         v-model="value"
         :weekdays="weekday"
         :short-weekdays="true"
-        now='2022-08-08'
+        now='1'
         :type="type"
         :events="events"
         :event-overlap-mode="mode"

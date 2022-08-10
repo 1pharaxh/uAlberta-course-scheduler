@@ -4,7 +4,7 @@ import vuetify from "./plugins/vuetify";
 import * as VueGoogleMaps from "vue2-google-maps"; // Import package
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "",
+    key: "key",
     libraries: "places",
   },
 });

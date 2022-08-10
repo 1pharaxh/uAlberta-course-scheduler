@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card max-width="90vw" color="cyan darken-3" dark :loading="isUpdating">
+        <v-card max-width="90vw" color="cyan darken-3" dark :loading="isUpdating" rounded="xl" elevation="12">
             <template slot="progress">
                 <v-progress-linear  color="lime darken-1" rounded height="6" indeterminate></v-progress-linear>
             </template>
@@ -14,7 +14,7 @@
                         <h3 class="text-h4 font-weight-medium">
                             Type your courses
                         </h3>
-                        <span class="grey--text text--lighten-1">Please enter no more than 5 courses</span>
+                        <span class="grey--text text--lighten-1">This app only supports upto 5 courses</span>
                     </v-col>
                 </v-row>
             </v-img>
@@ -79,12 +79,13 @@
                     </v-row>
                     <v-row>
                         <v-col>
-                            <v-btn color="primary" class="mr-4" @click="submit" :disabled="isDisabled">
+                            <v-btn rounded color="light-blue darken-2" class="mr-4" @click="submit" :disabled="isDisabled">
                                 Submit
                             </v-btn>
                         </v-col>
-                        <v-col>
-                            <v-btn color="success" class="mr-4" @click="add" :disabled="isDisabled2">
+                        <v-col >
+                            <v-btn rounded outlined color="grey lighten-5" class="mr-4" @click="add" :disabled="isDisabled2">
+                                <v-icon left>mdi-plus</v-icon>
                                 Add
                             </v-btn>
                         </v-col>
