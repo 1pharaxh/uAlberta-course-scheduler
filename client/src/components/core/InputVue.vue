@@ -169,8 +169,7 @@ export default {
 
             },
             add () {
-                this.courseName = this.courseName.toUpperCase()
-                this.chipArr.push(this.courseName + '-' + this.courseNumber)
+                this.chipArr.push(this.courseName.toUpperCase() + '-' + this.courseNumber)
                 this.courseName = ''
                 this.courseNumber = ''
                 this.chip = true
