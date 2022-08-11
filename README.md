@@ -2,7 +2,6 @@
 <h3>I AM NOT AFFILIATED WITH THE UNIVERSITY OF ALBERTA. This project uses publicly available data provided on uAlberta's website to make schedules</h3>
 
 [![LinkedIn][linkedin-shield]][linkedin-url]
-[![Check it out!](https://ualberta-sched.netlify.app/)
 
 <!-- PROJECT LOGO -->
 <br />
