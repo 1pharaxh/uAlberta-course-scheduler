@@ -130,10 +130,13 @@ Clicking on individual tiles would expand into a card revealing more details abo
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Add a smart course selector feature which picks the lecture and lab times that works the best
 - [ ] Improve the individual Calendar component styling 
+- [ ] Add a ratemyprofessor.com rating system for professors
+    - [ ] This is should appear on the expansion card for course tiles.
 - [ ] Add a "Save" button to the Calendar component
     - [ ] That should download a png image of the calendar
+- [ ] Improve the scrapping to work for a wider range of courses 
+    - [ ] Improve the backend api to schedule more efficiently
 
 See the [open issues](https://github.com/1pharaxh/uAlberta-course-scheduler/issues) for a full list of proposed features (and known issues).
 
