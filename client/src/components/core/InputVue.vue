@@ -1,192 +1,178 @@
 <template>
-    <div>
-        <v-card max-width="90vw" color="cyan darken-3" dark :loading="isUpdating" rounded="xl" elevation="12">
-            <template slot="progress">
-                <v-progress-linear  color="lime darken-1" rounded height="6" indeterminate></v-progress-linear>
-            </template>
-            <v-img  height="200" src="../../assets/2.png"> 
-                <v-row
-                    class="pa-4"
-                    align="center"
-                    justify="center"
-                >
-                    <v-col class="text-center">
-                        <h3 class="text-h4 font-weight-medium">
-                            Type your courses
-                        </h3>
-                        <span class="grey--text text--lighten-1">This app only supports upto 5 courses</span>
-                    </v-col>
-                </v-row>
-            </v-img>
-            <v-form v-model="valid"  ref="form">
-                <v-container>
-                    <v-row>
-                        <v-col class="ma-5" v-for="(item, index) in chipArr" :key="index">
-                            <div class="text-center">
-                                <v-chip
-                                    v-if="chip"
-                                    class="ma-2"
-                                    close
-                                    color="amber lighten-2"
-                                    outlined
-                                    @click:close="remove(item)"
-                                >
-                                    <v-icon left>mdi-book</v-icon>
-                                    {{ item }}
-                                </v-chip>
-                            </div>
-                        </v-col>
-                    </v-row>
-
-                    <v-row>
-                        <v-col
-                            cols="12"
-                            md="6"
-                        >
-                            <v-text-field
-                                v-model="courseName"
-                                :rules="courseNameRules"
-                                :counter="7"
-                                label="Course Name"
-                                required
-                            ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="12"
-                            md="6"
-                        >
-                            <v-text-field
-                                v-model="courseNumber"
-                                :rules="courseNumberRules"
-                                :counter="3"
-                                label="Course Number"
-                                required
-                            ></v-text-field>
-                        </v-col>
-                        <v-col
-                            class="d-flex"
-                            cols="12"
-                            sm="12"
-                        >
-                            <v-select
-                                :items="items"
-                                label="Choose Semester"
-                                outlined
-                                v-model="selected"
-                                :rules="semesterRules"
-                            ></v-select>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col>
-                            <v-btn rounded color="light-blue darken-2" class="mr-4" @click="submit" :disabled="isDisabled">
-                                Submit
-                            </v-btn>
-                        </v-col>
-                        <v-col >
-                            <v-btn rounded outlined color="grey lighten-5" class="mr-4" @click="add" :disabled="isDisabled2">
-                                <v-icon left>mdi-plus</v-icon>
-                                Add
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </v-form>
-        </v-card>
-        <v-slide-x-transition>
-            <div v-if="showTable" class="text-center">
-                <h4 class="ma-5 text-h2 font-weight-medium">Here's what I came up with..📑</h4>
-                <div v-for="(data, index) in tableData" :key="index">
-                    <TableVue class="mt-12" :data="data"/>
-                </div>
-            </div>
-        </v-slide-x-transition>
-    </div>
+  <div>
+    <v-sheet height="500" width="90vw">
+      <v-calendar
+        ref="calendar"
+        v-model="value"
+        :weekdays="weekday"
+        :short-weekdays="true"
+        now='1'
+        :type="type"
+        :events="events"
+        :event-overlap-mode="mode"
+        :event-overlap-threshold="30"
+        :event-color="getEventColor"
+        :day-format="dayFormat"
+        @change="getEvents"
+        @click:event="onEventClick"
+        first-interval= '7'
+        interval-count= '12'
+      >
+      </v-calendar>
+      <v-menu
+          v-model="selectedOpen"
+          :close-on-content-click="false"
+          :activator="selectedElement"
+          rounded="xl"
+          offset-x
+          elevation="10"
+        >
+          <v-card
+            color="grey lighten-4"
+            min-width="350px"
+            flat
+          >
+            <v-toolbar
+              :color="selectedEvent.color"
+              dark
+            >
+              <v-btn icon>
+                <v-icon>mdi-pencil</v-icon>
+              </v-btn>
+              <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn icon>
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </v-toolbar>
+            <v-card-text class="mb-1 pb-1 text-h6 font-weight-medium text-center">
+              🎓 {{ selectedEvent.fullName}}
+            </v-card-text>
+            <v-divider length="10px" thickness="5"></v-divider>
+            <v-card-text class="mb-0 pb-0 mt-1 pt-1 text-h7 font-weight-medium" >
+              ⌚ {{ showTime(selectedEvent.start)}} - {{ showTime(selectedEvent.end)}}
+            </v-card-text>
+            <v-card-text class="mb-0 pb-0 mt-1 pt-1 text-h7 font-weight-medium" v-if="selectedEvent.lectureName">
+              📔 {{ selectedEvent.lectureName }}
+            </v-card-text>
+            <v-card-text class="mb-0 pb-0 mt-1 pt-1 text-h7 font-weight-medium" v-if="selectedEvent.labName">
+              🧪 {{ selectedEvent.labName }}
+            </v-card-text>
+            <v-card-text class="mb-0 pb-0 mt-1 pt-1 text-h7 font-weight-medium" v-if="selectedEvent.seminarName">
+              🏫 {{ selectedEvent.seminarName }}
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                text
+                color="secondary"
+                @click="selectedOpen = false"
+              >
+                Cancel
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-menu>
+    </v-sheet>
+  </div>
 </template>
 <script>
-import TableVue from './TableVue.vue';
-import axios from 'axios'
-export default {
-    components: {
-        TableVue
+  import moment from 'moment';
+  export default {
+    props: {
+      data: {
+        type: Array
+      }
     },
     data () {
-        let currYear = parseInt(`${new Date().getFullYear()}`.slice(-2))
-        return {
-            selected: '',
-            isDisabled: false,
-            isDisabled2: false,
-            chipArr: [],
-            tableData: [],
-            showTable: false,
-                isUpdating: false,
-                items: ['Fall 20'+currYear, 'Winter 20'+currYear+1,],
-            chip: true,
-            valid: false,
-            courseName: '',
-            courseNameRules: [
-                v => !!v || 'Course Name is required',
-                v => (v && v.length <= 7) || 'Course Name must be less than 7 characters'
-            ],
-            courseNumber: '',
-            courseNumberRules: [
-                v => !!v || 'Course Number is required',
-                v => Number.isInteger(parseInt(v)) || 'Course Number must be a number',
-            ],
-            semesterRules: [
-                v => !!v || 'Semester is required',
-            ],
-            }
-        },
-        methods: {
-            remove (item) {
-                const index = this.chipArr.indexOf(item)
-                if (index >= 0) this.chipArr.splice(index, 1)
-            },
-            async submit() {
-                let currYear = parseInt(`${new Date().getFullYear()}`.slice(-2))
-                let url = this.selected[0] === 'F' ? 'https://exprescoursesapi.herokuapp.com/get/fa/'+currYear+'/' : 
-                    'https://exprescoursesapi.herokuapp.com/get/wi/'+(currYear+=1)+'/'
-                for (let i = 0; i < this.chipArr.length; i++) {
-                url += this.chipArr[i] + '/'
-                }
-                this.chipArr, this.tableData = []
-                this.selected = ''
-                this.isUpdating = true
-                this.showTable = false
-                this.isDisabled = true
-                this.isDisabled2 = true
-                let  response = await axios.get(url)
-                response = await axios.get(url)
-                this.tableData = response.data
-                this.showTable = true
-                this.isUpdating = false
-                this.isDisabled = false
-                this.isDisabled2 = false
-                this.chipArr = []
-                this.$refs.form.reset()
-                // console.log(this.tableData)
-
-            },
-            add () {
-                this.chipArr.push(this.courseName.toUpperCase() + '-' + this.courseNumber)
-                this.courseName = ''
-                this.courseNumber = ''
-                this.chip = true
-                this.isDisabled = this.chipArr.length === 6 ? true : false
-                this.isDisabled2 = this.chipArr.length === 5 ? true : false
-            }
-        },
-}
+      let name = this.data.map(item => item.courseName)
+      return {
+        type: 'week',
+        mode: 'stack',
+        weekday: [1, 2, 3, 4, 5],
+        value: '',
+        events: [],
+        colors: this.shuffle(['blue', 'indigo', 'deep-purple', 'red lighten-1', 'cyan', 'green', 'orange', 'grey darken-1', 'teal lighten-3', 'pink lighten-2']),
+        names: name,
+        selectedEvent: {},
+        selectedElement: null,
+        selectedOpen: false,
+      }
+    },
+    methods: {
+      showTime (time){
+        try {
+          return time.split('T')[1].slice(0, -3)
+        }
+        catch(e) {
+          return 
+        }
+      },
+      onEventClick({nativeEvent, event}) {
+        const open = () => {
+          this.selectedEvent = event;
+          this.selectedElement = nativeEvent.target;
+          requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true));
+        }
+        if (this.selectedOpen){
+          this.selectedOpen = false;
+          requestAnimationFrame(() => requestAnimationFrame(() => open()));
+        } else {
+          open();
+        }
+        nativeEvent.stopPropagation();
+      },
+      shuffle(array) {
+        let currentIndex = array.length,  randomIndex;
+        while (currentIndex != 0) {
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex--;
+          [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+      },
+      dayFormat(e) {
+        e = ''
+        return e;
+      },
+      getEvents ({ start, end }) {
+        const format = "YYYY-MM-DD"
+        let daysArr = ['M', 'T', 'W', 'H', 'F'];
+        let daysMap = {}
+        for (let i = 0; i < end.day-start.day + 1; ++i) {
+          daysMap[daysArr[i]] =  moment(start.date).add(i, 'days').format(format)
+        }
+        const events = []
+        for (let i = 0; i < this.data.length; i++){
+          let beginTime = this.data[i].time.split('-', 1)[0].replace(/\s/g, "")
+          let endTime = this.data[i].time.split('-', 2)[1].replace(/\s/g, "")
+          let days = this.data[i].days.split('')
+          days = days.map(day => {
+            return daysMap[day]
+          })
+          for (let el in days) {
+            events.push({
+              fullName:  this.data[i].courseFullName,
+              lectureName: this.data[i].lectureName,
+              labName: this.data[i].labName,
+              seminarName: this.data[i].seminarName,
+              name: this.names[i],
+              color: this.colors[i],
+              timed: true,
+              start: `${days[el]}T${beginTime}:00`,
+              end: `${days[el]}T${endTime}:00` ,
+            })
+          }
+        }
+        this.events = events
+      },
+      getEventColor (event) {
+        return event.color
+      },
+      rnd (a, b) {
+        return Math.floor((b - a + 1) * Math.random()) + a
+      },
+    },
+  }
 </script>
-
-<style scoped>
-
-h3 {
-    color: #F5F0BB;
-}
-h4 {
-    color: #006064
-}
-
+<style scoped lang="scss">
 </style>
