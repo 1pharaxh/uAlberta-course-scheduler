@@ -1,7 +1,8 @@
 <a name="readme-top"></a>
-<h3>I AM NOT AFFILIATED WITH UNIVERSITY. The project project uses publicly available data provided on uAlberta's website
-to make schedules</h3>
+<h3>I AM NOT AFFILIATED WITH THE UNIVERSITY OF ALBERTA. This project uses publicly available data provided on uAlberta's website to make schedules</h3>
+
 [![LinkedIn][linkedin-shield]][linkedin-url]
+[![Check it out!](https://ualberta-sched.netlify.app/)
 
 <!-- PROJECT LOGO -->
 <br />
@@ -54,7 +55,7 @@ to make schedules</h3>
 <!-- ABOUT THE PROJECT -->
 ## About The Project
  
-As the name implies uAlberta course scheduler is schedule making webApp. Using the latest vue2, vuetify, JavaScript and other mainstream technology development, The webApp can be used to create various combinations of time tables for students to plan their courses. The webApp is built with the MEVN stack (MongoDB, Express, Vue, Node) and is hosted on Netlify. In the backend the data is stored in a MongoDB database and is scrapped using `puppeteer.js` from the uAlberta's course catalogue.
+As the name implies uAlberta course scheduler is schedule making webApp. Using the latest vue2, vuetify and other mainstream technology development, The webApp can be used to create various combinations of time tables for students to plan their courses. The webApp is built with the MEVN stack (MongoDB, Express, Vue, Node) and is hosted on Netlify. In the backend the data is stored in a MongoDB database and is scrapped using `puppeteer.js` from the uAlberta's course catalogue and gets served to the frontend using expressjs api routes.
  
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
  
