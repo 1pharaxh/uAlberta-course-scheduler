@@ -1,27 +1,7 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
+<h3>I AM NOT AFFILIATED WITH UNIVERSITY. The project project uses publicly available data provided on uAlberta's website
+to make schedules</h3>
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -33,7 +13,7 @@
 <h3 align="center">uAlberta Course Scheduler</h3>
 
   <p align="center">
-    A full stack web application that helps students plan their university schedule.
+    MEVN (MongoDB, Express, Vue, Node) stack based web application that helps students plan their university schedule.
     <br />
     <a href="https://ualberta-sched.netlify.app/">View Demo</a>
     ·
@@ -74,7 +54,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
  
-As the name implies uAlberta course scheduler is schedule making webApp. Using the latest vue2, vuetify, JavaScript and other mainstream technology development, The webApp can be used to create various combinations of time tables for students to plan their courses.
+As the name implies uAlberta course scheduler is schedule making webApp. Using the latest vue2, vuetify, JavaScript and other mainstream technology development, The webApp can be used to create various combinations of time tables for students to plan their courses. The webApp is built with the MEVN stack (MongoDB, Express, Vue, Node) and is hosted on Netlify. In the backend the data is stored in a MongoDB database and is scrapped using `puppeteer.js` from the uAlberta's course catalogue.
  
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
  
@@ -95,10 +75,12 @@ Clicking on individual tiles would expand into a card revealing more details abo
 
 
 
-* [![Vue][Vue.js]][Vue-url]
-* ![Vuetify](https://img.shields.io/badge/Vuetify-1867C0?style=for-the-badge&logo=vuetify&logoColor=AEDDFF)
+* ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 * ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+* [![Vue][Vue.js]][Vue-url]
 * ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+* ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+* ![Vuetify](https://img.shields.io/badge/Vuetify-1867C0?style=for-the-badge&logo=vuetify&logoColor=AEDDFF)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
