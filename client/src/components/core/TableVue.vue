@@ -136,7 +136,7 @@
         const format = "YYYY-MM-DD"
         let daysArr = ['M', 'T', 'W', 'H', 'F'];
         let daysMap = {}
-        for (let i = 0; i < end.day-start.day + 1; ++i) {
+        for (let i = 0; i < Math.abs(end.day-start.day) + 1; ++i) {
           daysMap[daysArr[i]] =  moment(start.date).add(i, 'days').format(format)
         }
         const events = []
